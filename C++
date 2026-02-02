@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Base Class: User (Demonstrating Inheritance)
+class User {
+protected:
+    std::string name;
+    int id;
+public:
+    User(std::string n, int i) : name(n), id(i) {}
+    virtual void displayRole() = 0; // Pure virtual function
+    std::string getName() { return name; }
+};
+
+class Member : public User {
+public:
+    Member(std::string n, int i) : User(n, i) {}
+    void displayRole() override { std::cout << "Role: Library Member\n"; }
+};
+
+// Class: Book (Demonstrating Encapsulation)
+class Book {
+private:
+    std::string title;
+    std::string author;
+    bool isAvailable;
+
+public:
+    Book(std::string t, std::string a) : title(t), author(a), isAvailable(true) {}
+
+    void borrowBook() {
+        if (isAvailable) {
+            isAvailable = false;
+            std::cout << "Successfully borrowed: " << title << "\n";
+        } else {
+            std::cout << "Sorry, " << title << " is already out.\n";
+        }
+    }
+
+    void displayInfo() {
+        std::cout << "[" << (isAvailable ? "Available" : "Checked Out") << "] " 
+                  << title << " by " << author << "\n";
+    }
+};
+
+// Class: Library (Demonstrating Composition)
+class Library {
+private:
+    std::vector<Book> books;
+public:
+    void addBook(const Book& b) { books.push_back(b); }
+    
+    void showInventory() {
+        std::cout << "\n--- Current Library Inventory ---\n";
+        for (auto &book : books) {
+            book.displayInfo();
+        }
+    }
+};
+
+int main() {
+    Library myLibrary;
+    myLibrary.addBook(Book("The C++ Programming Language", "Bjarne Stroustrup"));
+    myLibrary.addBook(Book("Clean Code", "Robert C. Martin"));
+
+    Member student("Alice", 101);
+    student.displayRole();
+
+    myLibrary.showInventory();
+    return 0;
+}
