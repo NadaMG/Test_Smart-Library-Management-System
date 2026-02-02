@@ -1,0 +1,5 @@
+1. Class Diagram
+This defines the static structure of your system. It shows how classes relate (e.g., a Library contains Books).
+
+2. Sequence Diagram (The Borrowing Process)
+This shows the dynamic behavior—how objects talk to each other when a user requests a book.
